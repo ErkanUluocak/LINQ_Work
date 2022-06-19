@@ -63,6 +63,7 @@ namespace ConsoleApp1
             //AscDescTest(products);
 
 
+
             //LİNQ Alternatif yazım şekli
             var result = from p in products
                          where p.UnitPrice > 6000
