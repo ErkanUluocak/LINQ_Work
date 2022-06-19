@@ -36,12 +36,76 @@ namespace ConsoleApp1
             List<Product> products = new List<Product>()
             {
                  new Product() { ProductId = 1, CategoryId=1, ProductName ="Acer Laptop", QuantityPerUnit="32 GB Ram",UnitPrice = 10000,UnitsInStock=5},
-                 new Product() { ProductId = 2, CategoryId=1, ProductName ="Asus Laptop", QuantityPerUnit="16 GB Ram",UnitPrice = 8000,UnitsInStock=3},
-                 new Product() { ProductId = 3, CategoryId=1, ProductName ="Hp Laptop", QuantityPerUnit="8 GB Ram",UnitPrice = 6000,UnitsInStock=2},
+                 new Product() { ProductId = 2, CategoryId=1, ProductName ="Asus Laptop", QuantityPerUnit="16 GB Ram",UnitPrice = 18000,UnitsInStock=3},
+                 new Product() { ProductId = 3, CategoryId=1, ProductName ="Hp Laptop", QuantityPerUnit="8 GB Ram",UnitPrice = 18000,UnitsInStock=2},
                  new Product() { ProductId = 4, CategoryId=2, ProductName ="Samsung Telefon", QuantityPerUnit="4 GB Ram",UnitPrice = 5000,UnitsInStock=15},
                  new Product() { ProductId = 5, CategoryId=2, ProductName ="Apple Telefon", QuantityPerUnit="4 GB Ram",UnitPrice = 8000,UnitsInStock=0},
             };
 
+            //Test(products);
+            //GetProductsLinq(products);
+
+            //Verilen ürün listede var mı yok mu?
+            //AnyTest(products); 
+
+            //Aradığımız kritere uygun nesnenin kendisini veriyor. Örn : Bir ürünün detay sayfasına gitmesi
+            //FindTest(products);
+
+            //FindAll : Verilen şarta uygun olan tüm elemanları liste şeklinde döndürüyor.
+            //FindAll :  List türünde bir liste dönüyor.
+            //Where ise IEnumerable türünde liste dönüyor.
+            //FindAllTest(products);
+
+            //orderby (ascending) : artan 
+            //orderbydescending   : azalan
+            //thenby : sıralanmış verinin arasında sıralama yapmak için (ilk sıralamayı yap, ondan sonra bunu yap mantığı)
+
+            //AscDescTest(products);
+
+
+            //LİNQ Alternatif yazım şekli
+            var result = from p in products
+                         where p.UnitPrice > 6000
+                         orderby p.UnitPrice descending, p.ProductName ascending
+                         select p;
+
+            foreach (var product in result)
+            {
+                Console.WriteLine(product.ProductName);
+            }
+
+        }
+
+        private static void AscDescTest(List<Product> products)
+        {
+            var result = products.Where(p => p.ProductName.Contains("top")).OrderByDescending(p => p.UnitPrice).ThenByDescending(p => p.ProductName);
+
+            foreach (var product in result)
+            {
+                Console.WriteLine(product.ProductName);
+            }
+        }
+
+        private static void FindAllTest(List<Product> products)
+        {
+            var result = products.FindAll(p => p.ProductName.Contains("top"));
+            Console.WriteLine(result);
+        }
+
+        private static void FindTest(List<Product> products)
+        {
+            var result = products.Find(p => p.ProductId == 3);
+            Console.WriteLine(result.ProductName);
+        }
+
+        private static void AnyTest(List<Product> products)
+        {
+            var result = products.Any(p => p.ProductName == "Acer Laptop");
+            Console.WriteLine(result);
+        }
+
+        private static void Test(List<Product> products)
+        {
             Console.WriteLine("Algoritmik");
 
 
@@ -53,9 +117,6 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(product.ProductName);
             }
-
-            GetProductsLinq(products);
-
         }
 
         static List<Product> GetProducts(List<Product> products)
